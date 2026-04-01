@@ -36,7 +36,13 @@ def crea_categoria():
 
 @bp.route("/crea_piatto", methods=["GET", "POST"])
 def crea_piatto():
-    """Crea un nuovo piatto."""
     categories = categoria_repository.get_all_categories()
+    if request.method == "POST":
+        categoria_id = request.form.get("categoria_id", "").strip()
+        nome = request.form.get("nome", "").strip()
+        prezzo_str = request.form.get("prezzo", "").strip()
+        
+
+
     
 
