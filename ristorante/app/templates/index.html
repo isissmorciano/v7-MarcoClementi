@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Ristorante</h1>
+
+<nav class="action-links">
+    <a href="{{ url_for('main.crea_categoria') }}" class="btn">Crea Categoria</a>
+    <a href="{{ url_for('main.crea_piatto') }}" class="btn">Crea Piatto</a>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+{% if categories %}
+    <div class="categories-grid">
+        {% for category in categories %}
+            <div class="card">
+                <h2>{{ category['nome'] }}</h2>
+                <a href="{{ url_for('main.categoria_detail', categoria_id=category['id']) }}" class="btn">
+                    Visualizza Piatti →
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

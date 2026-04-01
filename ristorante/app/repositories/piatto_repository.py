@@ -34,22 +34,18 @@ def create_piatto(category_id, nome, prezzo):
     )
     db.commit()
 
-def get_piatto_by_id(piatto_id):
-    db = get.db()
-    db.execute("""
-        SELECT p.id, p.categoria.id, p.nome, p.prezzo, c.nome 
-        FROM piatti p
-        JOIN user u ON p.author_id = u.id
-        WHERE p.id = ?
-    """)
-    # fetchone() perché ci aspettiamo un solo risultato
-    post = db.execute(query, (post_id,)).fetchone()
-    if post:
-        post_dict = dict(post)
-        post_dict['created'] = datetime.fromisoformat(post_dict['created'])
-        return post_dict
-    return post
 
+
+def get_piatto_by_id(piatto_id): 
+    db = get_db()
+    piatto = db.execute("""
+        SELECT p.id, p.categoria_id, p.nome, p.prezzo, c.nome as categoria_nome 
+        FROM piatti p 
+        JOIN categorie c ON p.categoria_id = c.id 
+        WHERE p.id = ?,
+        (piatto_id,)
+    """).fetchone()
+    return piatto
 
 
 

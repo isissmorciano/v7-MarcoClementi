@@ -18,3 +18,14 @@ def create_category(nome):
         (nome,)
     )
     db.commit()
+
+
+
+def get_category_by_id(category_id):
+    db = get_db()
+    category = db.execute(
+        "SELECT id, nome FROM categorie WHERE id = ?",
+        (category_id,)
+    ).fetchone()
+    return category
+
